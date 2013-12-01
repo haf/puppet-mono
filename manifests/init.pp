@@ -29,5 +29,10 @@ class mono {
       creates => '/etc/.certs-nugetgallery.blob.core.windows.net';
   }
 
+  exec { 'update-CAs':
+    command => '/usr/bin/mozroots --import --machine --sync && touch /etc/.cmd-update-CAs',
+    creates => '/etc/.cmd-update-CAs',
+  }
+
   anchor { 'mono::end': }
 }
