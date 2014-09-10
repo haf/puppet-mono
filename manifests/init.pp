@@ -1,20 +1,12 @@
 class mono {
-  anchor { 'mono::start': }
-
   package { 'mono':
     ensure => installed,
-    require => Anchor['mono::start'],
-    before  => Anchor['mono::end'],
   }
 
   Exec {
     user    => 'root',
     path    => '/usr/bin:/bin',
-    require => [
-      Anchor['mono::start'],
-      Package['mono']
-    ],
-    before  => Anchor['mono::end'],
+    require => Package['mono'],
   }
 
   # http://www.mono-project.com/FAQ:_Security
@@ -33,6 +25,4 @@ class mono {
     command => '/usr/bin/mozroots --import --machine --sync && touch /etc/.cmd-update-CAs',
     creates => '/etc/.cmd-update-CAs',
   }
-
-  anchor { 'mono::end': }
 }
